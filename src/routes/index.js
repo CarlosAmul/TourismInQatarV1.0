@@ -30,7 +30,7 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { element: <Navigate to="/dashboard/one" replace />, index: true },
-        { path: 'one', element: <PageOne /> },
+        { path: 'one', element: <HomePage /> },
         { path: 'two', element: <PageTwo /> },
         { path: 'three', element: <PageThree /> },
         {
@@ -58,7 +58,7 @@ export default function Router() {
 
 
 // Dashboard
-const PageOne = Loadable(lazy(() => import('../pages/PageOne')));
+const HomePage = Loadable(lazy(() => import('../pages/HomePage')));
 const PageTwo = Loadable(lazy(() => import('../pages/PageTwo')));
 const PageThree = Loadable(lazy(() => import('../pages/PageThree')));
 const PageFour = Loadable(lazy(() => import('../pages/PageFour')));
