@@ -161,6 +161,7 @@ export default function Router() {
         { path: 'details/pearl', element: <PearlPage /> },
         { path: 'details/souq', element: <SouqPage /> },
         { path: 'details/musherib', element: <MusheribPage /> },
+        { path: 'details/lusail', element: <LusailPage /> },
       ],
     },
     { path: '*', element: <Navigate to="/404" replace /> },
@@ -229,3 +230,4 @@ const NotFound = Loadable(lazy(() => import('../pages/Page404')));
 const PearlPage =  Loadable(lazy(() => import('../pages/details/Pearl')));
 const SouqPage =  Loadable(lazy(() => import('../pages/details/Souq_Waqif')));
 const MusheribPage =  Loadable(lazy(() => import('../pages/details/Musherib')));
+const LusailPage =  Loadable(lazy(() => import('../pages/details/Lusail')));
