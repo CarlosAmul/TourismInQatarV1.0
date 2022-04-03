@@ -158,7 +158,8 @@ export default function Router() {
         { path: 'about-us', element: <About /> },
         { path: 'contact-us', element: <Contact /> },
         { path: 'faqs', element: <Faqs /> },
-        { path: 'details/pearl', element: <DetailsPage /> },
+        { path: 'details/pearl', element: <PearlPage /> },
+        { path: 'details/souq', element: <SouqPage /> },
       ],
     },
     { path: '*', element: <Navigate to="/404" replace /> },
@@ -224,4 +225,5 @@ const Page500 = Loadable(lazy(() => import('../pages/Page500')));
 const NotFound = Loadable(lazy(() => import('../pages/Page404')));
 
 // DETAILS
-const DetailsPage =  Loadable(lazy(() => import('../pages/details/Pearl')));
+const PearlPage =  Loadable(lazy(() => import('../pages/details/Pearl')));
+const SouqPage =  Loadable(lazy(() => import('../pages/details/Souq_Waqif')));
