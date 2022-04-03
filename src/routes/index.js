@@ -163,6 +163,7 @@ export default function Router() {
         { path: 'details/musherib', element: <MusheribPage /> },
         { path: 'details/lusail', element: <LusailPage /> },
         { path: 'details/katara', element: <KataraPage /> },
+        { path: 'details/corniche', element: <CornichePage /> },
       ],
     },
     { path: '*', element: <Navigate to="/404" replace /> },
@@ -233,3 +234,4 @@ const SouqPage =  Loadable(lazy(() => import('../pages/details/Souq_Waqif')));
 const MusheribPage =  Loadable(lazy(() => import('../pages/details/Musherib')));
 const LusailPage =  Loadable(lazy(() => import('../pages/details/Lusail')));
 const KataraPage =  Loadable(lazy(() => import('../pages/details/Katara')));
+const CornichePage =  Loadable(lazy(() => import('../pages/details/Corniche')));
