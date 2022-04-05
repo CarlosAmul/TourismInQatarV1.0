@@ -13,30 +13,10 @@ import Image from '../components/Image';
 import SvgIconStyle from '../components/SvgIconStyle';
 // utills
 import { fDate } from '../utils/formatTime';
-// routes
 
 // ----------------------------------------------------------------------
 
-// const SORT_OPTIONS = [
-//   { value: 'latest', label: 'Latest' },
-//   { value: 'popular', label: 'Popular' },
-//   { value: 'oldest', label: 'Oldest' },
-// ];
 
-// // ----------------------------------------------------------------------
-
-// const applySort = (places, sortBy) => {
-//   if (sortBy === 'latest') {
-//     return orderBy(places, ['createdAt'], ['desc']);
-//   }
-//   if (sortBy === 'oldest') {
-//     return orderBy(places, ['createdAt'], ['asc']);
-//   }
-//   if (sortBy === 'popular') {
-//     return orderBy(places, ['view'], ['desc']);
-//   }
-//   return places;
-// };
 HomePage.propTypes = {
 
   index: PropTypes.number,
@@ -54,7 +34,9 @@ export default function HomePage({ index }) {
 
   useEffect(() => {
     createPlaces();
+   
   }, []);
+  
   const createPlaces = () => {
     const places = [
       {
@@ -89,15 +71,31 @@ export default function HomePage({ index }) {
       },
     ];
     setPlaces(places);
+  //     changeCardColor()
   };
+  const changeCardColor=()=>{
+    for(let i=0; i<6; i+=1){
+      
+     if (document.getElementById(`card${i}`).style.backgroundColor==="#A81818"){
+      document.getElementById(`card${i}`).style.backgroundColor = "#EBD168" }
+     else{
+      document.getElementById(`card${i}`).style.backgroundColor = "#A81818" 
+    }}
+//    setTimeout(changeCardColor(), 10000)
+
+     }
   return (
     <Page title="Home Page">
       <Container maxWidth={themeStretch ? false : 'lg'}>
 
         <Grid container spacing={3}>
           {places.map((place, index) => (
-            <Grid key={place.id} item xs={12} sm={6} md={4}>
-              <Card>
+            <Grid key={place.id} item xs={12} sm={6} md={4} >
+              <Card 
+              id={`card${place.id}`}
+              sx={{
+              backgroundColor:"#A81818"
+            }} >
                 <Box sx={{ position: 'relative' }}>
                   <Image alt="cover" src={place.img} ratio="4/3" />
                 </Box>
