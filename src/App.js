@@ -12,6 +12,7 @@ import NotistackProvider from './components/NotistackProvider';
 import ThemeColorPresets from './components/ThemeColorPresets';
 import ThemeLocalization from './components/ThemeLocalization';
 import MotionLazyContainer from './components/animate/MotionLazyContainer';
+import DarkLightSetting from './components/DarkLightMode/DarkLightSettings'
 
 // ----------------------------------------------------------------------
 
@@ -26,6 +27,7 @@ export default function App() {
                 <ProgressBarStyle />
                 <ChartStyle />
                 <Settings />
+                <DarkLightSetting />
                 <ScrollToTop />
                 <Router />
               </MotionLazyContainer>
