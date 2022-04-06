@@ -7,10 +7,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useEffect, useCallback, useState } from 'react';
 // @mui
 import { Box, Link, Card, Avatar, Typography, CardContent, Stack, Grid, Button, Container } from '@mui/material';
-// map
-import mapboxgl from 'mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
-import Map from 'react-map-gl'
-import 'mapbox-gl/dist/mapbox-gl.css';
 // hooks
 import useSettings from '../hooks/useSettings';
 // components
@@ -20,6 +16,8 @@ import Image from '../components/Image';
 import SvgIconStyle from '../components/SvgIconStyle';
 // utills
 import { fDate } from '../utils/formatTime';
+// map 
+import QMap from './Map'
 
 // routes
 
@@ -61,9 +59,7 @@ export default function HomePage({ index }) {
   const linkTo = '/';
 
 
-  const [viewMap, setViewMap] = useState(false)
-
-  mapboxgl.accessToken = 'pk.eyJ1IjoiY2FybG9zYW11bCIsImEiOiJjbDFuYTc2NDMwYWRlM29wZzRqbTVqaDVrIn0.7-I9jUfnZ2TagYEF491H8g'
+  const [viewMap, setViewMap] = useState(true)
 
   useEffect(() => {
     createPlaces();
@@ -103,22 +99,16 @@ export default function HomePage({ index }) {
     ];
     setPlaces(places);
   };
+
+  
+
   return (
     <Page title="Home Page">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <Button onClick={() => setViewMap(!viewMap)}>View Map</Button>
         <Grid container spacing={3}>
           <Grid key="map" item hidden={!viewMap} xs={12}>
-            tis i, de map
-            <Map
-              initialViewState={{
-                longitude: -122.4,
-                latitude: 37.8,
-                zoom: 14
-              }}
-              style={{ width: 600, height: 400 }}
-              mapStyle="mapbox://styles/mapbox/streets-v9?access_token=sk.eyJ1IjoiY2FybG9zYW11bCIsImEiOiJjbDFuYWJtZmQwN2U4M2xzMHZ6bWJ6NXVxIn0.Dir6AiSvYeuJjslEyCXcfQ"
-            />
+            <QMap/>
           </Grid>
           {places.map((place, index) => (
             <Grid key={place.id} item xs={12} sm={6} md={4}>
