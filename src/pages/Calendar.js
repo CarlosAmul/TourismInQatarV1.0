@@ -32,6 +32,7 @@ import TimePicker from '@mui/lab/TimePicker';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import DatePicker from '@mui/lab/DatePicker';
 import MobileDatePicker from '@mui/lab/MobileDatePicker';
+import db from '../db'
 
 // redux
 // import { useDispatch, useSelector } from '../redux/store';
@@ -89,17 +90,13 @@ export default function Calendar() {
 
   const [theTitle, setTheTitle] = useState('');
 
-  const [startDate, setStartDate] = useState(new Date());
+  const [EventDate, setEventDate] = useState(new Date());
 
-  const [endDate, setEndDate] = useState(new Date());
 
   const [color, setColor] = useState('#7A0C2E');
 
   useEffect(() => {
-    setEvents([
-      { id: 0, title: 'event 1', date: '2022-04-01' },
-      { id: 1, title: 'event 2', date: '2022-04-02' },
-    ]);
+    db.Events.listenToEvents(setEvents)
   }, []);
 
   useEffect(() => {
@@ -154,39 +151,6 @@ export default function Calendar() {
       const calendarApi = calendarEl.getApi();
       calendarApi.unselect();
     }
-    // dispatch(selectRange(arg.start, arg.end));
-  };
-
-  const handleSelectEvent = (arg) => {
-    // dispatch(selectEvent(arg.event.id));
-  };
-
-  const handleResizeEvent = async ({ event }) => {
-    // try {
-    //   dispatch(
-    //     updateEvent(event.id, {
-    //       allDay: event.allDay,
-    //       start: event.start,
-    //       end: event.end,
-    //     })
-    //   );
-    // } catch (error) {
-    //   console.error(error);
-    // }
-  };
-
-  const handleDropEvent = async ({ event }) => {
-    // try {
-    //   dispatch(
-    //     updateEvent(event.id, {
-    //       allDay: event.allDay,
-    //       start: event.start,
-    //       end: event.end,
-    //     })
-    //   );
-    // } catch (error) {
-    //   console.error(error);
-    // }
   };
 
   const handleAddEvent = () => {
@@ -194,25 +158,11 @@ export default function Calendar() {
   };
 
   const handleSubmit = () => {
-   // alert(startDate.toLocaleDateString())
-    const start12=reformatDate(startDate)
-    const end12=reformatDate(endDate)
-    alert(start12)
-    alert(end12)
-    const newEvent = {
-      id: events.length,
-      title: theTitle, 
-      date: start12,
-    };
-    const allevents = events;
-    allevents.push(newEvent);
+    const eventDate=reformatDate(EventDate)   
+    db.Events.addEvent({ title: theTitle, 
+      date: eventDate})
 
-    setEvents(allevents);
-    alert(events.length)
-
-    setTheTitle("")
-    setStartDate(new Date)
-    setEndDate(new Date)
+      handleCancel()
   
   };
   const handleCloseModal = () => {
@@ -226,11 +176,13 @@ export default function Calendar() {
     if(date1[0]<10){
       date1[0]=`0${date1[0]}`
     }
-    return (`${date1[2]}-${date1[0]}-${date1[1]}`)
+    return (String(`${date1[2]}-${date1[0]}-${date1[1]}`))
    
   }
-  const isDateError = isBefore(new Date(endDate), new Date(startDate));
-
+const handleCancel=()=>{
+  setTheTitle("")
+  setEventDate(new Date)
+}
   return (
     <Page title="Calendar">
       <Container maxWidth={themeStretch ? false : 'xl'}>
@@ -241,25 +193,19 @@ export default function Calendar() {
 
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                    <DatePicker
-                      label="Start date" 
-                      value={startDate} 
-                      onChange={(date) => setStartDate(date)}     
+                      label="Event date" 
+                      value={EventDate} 
+                      onChange={(date) => setEventDate(date)}     
                       inputFormat="yyyy-MM-dd"
                       renderInput={(params) => <TextField {...params} />}
                      />
-                  <DatePicker
-                      label="End date"
-                      value={endDate} 
-                      onChange={(date) => setEndDate(date)}      
-                      inputFormat="yyyy-MM-dd"
-                      renderInput={(params) => <TextField {...params} />}
-                    />  
+                
                 
              </LocalizationProvider>
               <DialogActions>
               <Box sx={{ flexGrow: 1 }} />
 
-              <Button variant="outlined" color="inherit">
+              <Button variant="outlined" color="inherit" onClick={handleCancel}>
                 Cancel
               </Button>
 
@@ -295,10 +241,10 @@ export default function Calendar() {
               headerToolbar={false}
               allDayMaintainDuration
               eventResizableFromStart
-              select={handleSelectRange}
-              eventDrop={handleDropEvent}
-              eventClick={handleSelectEvent}
-              eventResize={handleResizeEvent}
+              // select={handleSelectRange}
+              // eventDrop={handleDropEvent}
+              // eventClick={(event)=>handleSelectEvent(event)}
+              // eventResize={handleResizeEvent}
               height={isDesktop ? 720 : 'auto'}
               plugins={[listPlugin, dayGridPlugin, timelinePlugin, timeGridPlugin, interactionPlugin]}
             />

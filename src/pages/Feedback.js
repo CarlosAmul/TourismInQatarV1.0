@@ -27,15 +27,39 @@ import db from '../db'
 
 export default function Feedback() {
   const { themeStretch } = useSettings();
+  const [id, setId]=useState("")
   const [name, setName]=useState("")
   const [comment, setComment]=useState("")
   const [feedbacks, setFeedbacks]=useState([])
+  const [edit, setEdit]=useState(false)
+
   useEffect(() => db.Feedbacks.listenToFeedbacks(setFeedbacks), [])
 
   const handleSubmit=()=>{
-  
+     db.Feedbacks.addFeedback({name, comment})
+    handleCancel()
   }
+  const handleCancel=()=>{
+    setId("")
+    setName("")
+    setComment("")
+ }
+ const handleEdit=(item)=>{
+   setId(item.id)
+   setName(item.name)
+   setComment(item.comment)
 
+ }
+ const handleUpdate=()=>{
+  db.Feedbacks.updateFeedback({id, name, comment})
+  handleCancel()
+
+ }
+const handleDelete=(id)=>{
+
+  db.Feedbacks.deleteFeedback(id)
+
+}
   return (
     <Page title="Page Three">
       <Container maxWidth={themeStretch ? false : 'xl'}>
@@ -51,13 +75,15 @@ export default function Feedback() {
             <DialogActions>
               <Box sx={{ flexGrow: 1 }} />
 
-              <Button variant="outlined" color="inherit">
+              <Button variant="outlined" color="inherit" onClick={handleCancel}>
                 Cancel
               </Button>
-
-              <Button type="submit" variant="contained" onClick={handleSubmit}>
+{edit?<Button type="submit" variant="contained" onClick={handleSubmit}>
                 Add
-              </Button>
+              </Button>:<Button type="submit" variant="contained" onClick={handleUpdate}>
+                Update
+              </Button>}
+            
             </DialogActions>
           </Stack>
         </FormControl>
@@ -72,7 +98,7 @@ export default function Feedback() {
     >
         {feedbacks.length>0?      
         
-          feedbacks.map(comment=><Paper elevation={3}>
+          feedbacks.map(comment=><Paper elevation={3} key={comment.id}>
             <Typography sx={{
               fontWeight:"bold",
               color:"#EBD168"
@@ -81,12 +107,12 @@ export default function Feedback() {
           <Typography>
             {comment.comment}
           </Typography>
-          <Button variant="outlined" color="inherit">
-                Cancel
+          <Button variant="outlined" color="inherit"  onClick={()=>handleDelete(comment.id)}>
+                Delete
               </Button>
 
-              <Button type="submit" variant="contained" onClick={handleSubmit}>
-                Add
+              <Button type="submit" variant="contained" onClick={()=>handleEdit(comment)}>
+                Edit
               </Button>
           </Paper>):<></>}
           </Box>
