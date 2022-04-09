@@ -5,6 +5,7 @@ import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // components
 import LoadingScreen from '../components/LoadingScreen';
+// import Calendar from 'src/pages/Calendar';
 
 // ----------------------------------------------------------------------
 
@@ -31,7 +32,7 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/one" replace />, index: true },
         { path: 'one', element: <HomePage /> },
-        { path: 'two', element: <PageTwo /> },
+        { path: 'two', element: <Calendar /> },
         { path: 'three', element: <PageThree /> },
         {
           path: 'user',
@@ -59,8 +60,8 @@ export default function Router() {
 
 // Dashboard
 const HomePage = Loadable(lazy(() => import('../pages/HomePage')));
-const PageTwo = Loadable(lazy(() => import('../pages/PageTwo')));
-const PageThree = Loadable(lazy(() => import('../pages/PageThree')));
+const Calendar = Loadable(lazy(() => import('../pages/Calendar')));
+const PageThree = Loadable(lazy(() => import('../pages/Feedback')));
 const PageFour = Loadable(lazy(() => import('../pages/PageFour')));
 const PageFive = Loadable(lazy(() => import('../pages/PageFive')));
 const PageSix = Loadable(lazy(() => import('../pages/PageSix')));
