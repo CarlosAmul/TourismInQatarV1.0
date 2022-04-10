@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Pearl",
+        "coordinates": [51.55148, 25.36875]
+    },
+    {
+        "name": "Souq",
+        "coordinates": [51.53280, 25.28840]
+    },
+    {
+        "name": "Musherib",
+        "coordinates": [51.52723, 25.28148]
+    },
+    {
+        "name": "Lusail",
+        "coordinates": [51.53004, 25.42068]
+    },
+    {
+        "name": "Katara",
+        "coordinates": [51.52556, 25.35926]
+    },
+    {
+        "name": "Cournish",
+        "coordinates": [51.51933, 25.30795]
+    }
+]
