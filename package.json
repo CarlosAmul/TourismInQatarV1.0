@@ -5,6 +5,7 @@
   "description": "Simple React Scripts & Javascript",
   "private": true,
   "scripts": {
+    "test": "jest",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
