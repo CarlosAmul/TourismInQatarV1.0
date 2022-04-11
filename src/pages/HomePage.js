@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import { useEffect, useCallback, useState } from 'react';
 // @mui
-import { Box, Link, Card, Avatar, Typography, CardContent, Stack, Grid, Button, Container } from '@mui/material';
+import { Box, Link, Card, Avatar, Typography, CardContent, Stack, Grid, Button, Container, TextField } from '@mui/material';
 // hooks
 import useSettings from '../hooks/useSettings';
 // components
@@ -23,28 +23,7 @@ import QMap from './Map'
 
 // ----------------------------------------------------------------------
 
-// const SORT_OPTIONS = [
-//   { value: 'latest', label: 'Latest' },
-//   { value: 'popular', label: 'Popular' },
-//   { value: 'oldest', label: 'Oldest' },
-// ];
-
-// // ----------------------------------------------------------------------
-
-// const applySort = (places, sortBy) => {
-//   if (sortBy === 'latest') {
-//     return orderBy(places, ['createdAt'], ['desc']);
-//   }
-//   if (sortBy === 'oldest') {
-//     return orderBy(places, ['createdAt'], ['asc']);
-//   }
-//   if (sortBy === 'popular') {
-//     return orderBy(places, ['view'], ['desc']);
-//   }
-//   return places;
-// };
 HomePage.propTypes = {
-
   index: PropTypes.number,
 
 };
@@ -52,7 +31,9 @@ export default function HomePage({ index }) {
   const { themeStretch } = useSettings();
 
   const [places, setPlaces] = useState([]);
-
+  const [search, setSearch] = useState("");
+  const [backgroundColor, setBackgroundColor]=useState(["#EBD168","#A81818"] )
+  const [textColor, setTextColor]=useState(["#A81818", "#EBD168"])
   const [filters, setFilters] = useState('latest');
   const latestPostLarge = index === 0;
   const latestPostSmall = index === 1 || index === 2;
@@ -63,7 +44,9 @@ export default function HomePage({ index }) {
 
   useEffect(() => {
     createPlaces();
+
   }, []);
+
   const createPlaces = () => {
     const places = [
       {
@@ -98,21 +81,74 @@ export default function HomePage({ index }) {
       },
     ];
     setPlaces(places);
+    // changeCardColor()
+
   };
 
-  
+  const changeCardColor = () => {
+    for(let i=0; i<6; i+=1){
 
+      if(backgroundColor[0]==="#EBD168"){
+        setBackgroundColor(["#A81818",'#EBD168'])
+        setTextColor(["#EBD168","#A81818"])
+      }
+      else{
+        setBackgroundColor(["#EBD168","#A81818"])
+        setTextColor(["#A81818",'#EBD168'])
+      
+      }}
+      // setInterval(clickButton, 10000)
+  };
+  const clickButton=()=>{
+    document.getElementById("changeColor").click()
+  }
+  const shuffle=()=> {
+    const places1= places
+    const newArrengement=[]
+    let currentIndex = places.length
+    let randomIndex;
+
+
+    while (currentIndex !== 0) {
+  
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      newArrengement.push(places1[randomIndex])
+      places1.splice(randomIndex, 1)
+      currentIndex-=1
+    }
+    setPlaces(newArrengement)
+  }
+  const handleSearch=()=>{
+    if(search.length>0){
+    
+    const searchPlaces=places.filter(place=>place.placeName.toLowerCase().includes(search.toLowerCase()))
+    
+    setPlaces(searchPlaces)
+    }
+  else{
+    createPlaces()
+  }  }
   return (
     <Page title="Home Page">
       <Container maxWidth={themeStretch ? false : 'lg'}>
+        <TextField lable="Search" value={search} onChange={val=>setSearch(val.target.value)}/>
         <Button onClick={() => setViewMap(!viewMap)}>View Map</Button>
+        <Button id="searchNow"onClick={handleSearch}>search</Button>
+        <Button id="changeColor" onClick={changeCardColor}>change color</Button>
+        <Button id="shuffle" onClick={shuffle}>shuffle cards</Button>
+
         <Grid container spacing={3}>
           <Grid key="map" item hidden={!viewMap} xs={12}>
             <QMap/>
           </Grid>
           {places.map((place, index) => (
             <Grid key={place.id} item xs={12} sm={6} md={4}>
-              <Card>
+              <Card
+                id={`card${place.id}`}
+                sx={{
+                  backgroundColor: `${backgroundColor[index%2]}`,
+                }}
+              >
                 <Box sx={{ position: 'relative' }}>
                   <Image alt="cover" src={place.img} ratio="4/3" />
                 </Box>
@@ -134,7 +170,11 @@ export default function HomePage({ index }) {
                     variant="caption"
                     component="div"
                     sx={{
+<<<<<<< HEAD
                       color: 'primary',
+=======
+                      color: `${textColor[index%2]}`,
+>>>>>>> 74a25ce98c4f559d33a5007d8174a8bacaf06412
                       fontSize: '18px',
                       ...((latestPostLarge || latestPostSmall) && {
                         opacity: 0.64,
