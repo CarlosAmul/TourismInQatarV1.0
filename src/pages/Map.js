@@ -2,58 +2,79 @@
 
 // map
 import Map, {
-    Layer, Feature, Marker, Popup,
-} from 'react-mapbox-gl'
-import { useEffect, useCallback, useState, useMemo } from 'react';
+    Layer, Feature, Marker, Popup, NavigationControl, ScaleControl, GeolocateControl,
+    FullscreenControl, MapRef, MapLayerMouseEvent, MapboxStyle
+} from 'react-map-gl'
+import { useEffect, useCallback, useState, useMemo, useRef } from 'react';
+import { Box, Link, Card, Avatar, Typography, CardContent, Stack, Grid, Button, Container, TextField } from '@mui/material';
 import { render } from 'react-dom';
 import { BsPinFill } from "react-icons/bs";
 import 'mapbox-gl/dist/mapbox-gl.css';
+import bbox from '@turf/bbox';
 import places from './places.json'
+import Image from '../components/Image';
 
-export default function QMap() {
-    const qatar = [51.47, 25.3]
-    const pearl = [51.55148, 25.36875];
-    const souq = [51.53280, 25.28840]
 
-    const [showPopup, setShowPopup] = useState(false)
-    const [popupInfo, setPopupInfo] = useState(null)
+
+// const Map = ReactMapGl({
+//     accessToken:
+//         'pk.eyJ1IjoiY2FybG9zYW11bCIsImEiOiJjbDFuYTc2NDMwYWRlM29wZzRqbTVqaDVrIn0.7-I9jUfnZ2TagYEF491H8g'
+// });
+
+export default function QMap({ setPopupInfo, popupInfo }) {
+    const mapRef = useRef(null);
+
+    const [position, setPosition] = useState(null)
+    // const [showPopup, setShowPopup] = useState(false)
+    useEffect(() => popupInfo ? mapRef.current.flyTo({ center: [popupInfo.coordinates[0], popupInfo.coordinates[1]], duration: 1000 }) : '', [popupInfo])
 
     const pins = useMemo(
         () =>
             places.map((place, index) => (
-                <Marker key={place.name} coordinates={place.coordinates} anchor="bottom" >
+                <Marker key={place.placeName} longitude={place.coordinates[0]} latitude={place.coordinates[1]} anchor="bottom" >
                     <BsPinFill color="red" size={23} onClick={() => setPopupInfo(place)} />
                 </Marker>
             )), [])
 
-    // const Map = ReactMapboxGl({
-    //     accessToken:
-    //         'pk.eyJ1IjoiY2FybG9zYW11bCIsImEiOiJjbDFuYTc2NDMwYWRlM29wZzRqbTVqaDVrIn0.7-I9jUfnZ2TagYEF491H8g'
-    // });
     return (<Map
-        mapStyle="mapbox://styles/mapbox/streets-v9"
-        mapboxAccessToken="pk.eyJ1IjoiY2FybG9zYW11bCIsImEiOiJjbDFuYTc2NDMwYWRlM29wZzRqbTVqaDVrIn0.7-I9jUfnZ2TagYEF491H8g"
-        style={{
-            height: '50vh',
-            width: '60vw'
+        ref={(ref) => { mapRef.current = ref; }}
+        initialViewState={{
+            longitude: 51.52556,
+            latitude: 25.35926,
+            zoom: 10
         }}
-        center={[51.52556, 25.35926]}
-        zoom={[10]}
+        style={{ width: '100%', height: '50vh' }}
+        mapboxAccessToken="pk.eyJ1IjoiY2FybG9zYW11bCIsImEiOiJjbDFuYTc2NDMwYWRlM29wZzRqbTVqaDVrIn0.7-I9jUfnZ2TagYEF491H8g"
+        mapStyle="mapbox://styles/mapbox/streets-v9"
     >
-
+        <NavigationControl />
+        <ScaleControl />
+        <GeolocateControl />
+        <FullscreenControl />
         {pins}
 
         {popupInfo && (
             <Popup
-                anchor="top"
-                coordinates={popupInfo.coordinates}
-                onClick={() => setPopupInfo(null)}
-            // onClose={() => setPopupInfo(null)}
+                anchor="bottom"
+                longitude={popupInfo.coordinates[0]}
+                latitude={popupInfo.coordinates[1]}
+                closeOnClick={false}
+                // closeOnMove
+                onClose={() => setPopupInfo(null)}
             >
-                <div>
-                    {popupInfo.name}
-                </div>
-                {/* <img width="100%" src={popupInfo.image} /> */}
+                <Card>
+                    <CardContent>
+                        <Typography
+                            variant="subtitle2"
+                        >
+                            {popupInfo.placeName}
+                        </Typography>
+                    </CardContent>
+                    <Box>
+                        <Image alt="cover" src={popupInfo.img} ratio="4/3" />
+                    </Box>
+                    <Button onClick={()=>setPopupInfo(null)} variant="contained" style={{ width: '100%' }}>Close</Button>
+                </Card>
             </Popup>
         )}
     </Map>)
