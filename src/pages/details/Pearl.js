@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 // @mui
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Tab, Card, CardContent, Grid, Divider, Container, Typography } from '@mui/material';
+import { Box, Tab, Card, CardContent, Grid, Divider, Container, Typography, Button } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
@@ -60,9 +60,40 @@ export default function PearlDetails() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
   const [value, setValue] = useState('1');
+  // const [typeState, setTypeState] = useState(1)
   const { name = '' } = useParams();
-
+  let i = 0
   const place = { id: 0, placeName: "The Pearl", desc: "The Pearl-Qatar is a destination of choice offering its residents and visitors an integrated leisure experience. On this fascinating Island, luxury living blends with lively shopping and entertainment, and scenic backdrops are complemented by a thriving community lifestyle, making The Pearl-Qatar a true living wonder…", img: ['https://thepearlqatar.com/-/media/Thepearlqatar/ExploreTheIsland2019/QQ-2.jpg', 'https://www.myholidays.com/blog/content/images/2020/11/The-Pearl-Qatar-1.jpg', 'https://mycoreo.com/wp-content/uploads/2014/05/the-pearl-qatar-650.jpg', 'https://www.regencyholidays.com/blog/content/images/2021/06/Interesting-Things-To-Know-About-Pearl-Qatar.jpg'] }
+
+  const typingAnimation = () => {
+    if (i < place.placeName.length) {
+      document.getElementById("placeName").innerHTML += place.placeName.charAt(i);
+      i += 1
+      setTimeout(typingAnimation, 50);
+    }
+    else if (i === place.placeName.length){
+      console.log("Animation 2")
+      typingAnimation2()
+    }
+  }
+
+  function delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
+  }
+
+  const typingAnimation2 = () => {
+    const element = document.getElementById("placeName")
+    element.innerHTML = ""
+    for (let d = 0; d < place.placeName.length; d += 1) {
+      element.innerHTML += `<Text id="text${d}">${place.placeName.charAt(d)}</Text>`
+    }
+    setInterval(() =>{
+    for (let d = 0; d < place.placeName.length; d += 1) {
+      const letter = document.getElementById(`text${d}`)
+      delay(10000).then(letter.style.color = `#${Math.floor(Math.random()*16777215).toString(16)}`);
+    }
+  }, 100)
+  }
 
   return (
     <Page title={place.placeName}>
@@ -78,9 +109,10 @@ export default function PearlDetails() {
           <>
             <Card>
               <CardContent>
-                <Typography sx={{ fontSize: 30 }} color="text.primary" gutterBottom>
-                {place.placeName}
+                <Typography id="placeName" sx={{ fontSize: 30 }} color="text.primary" gutterBottom>
+                  {}
                 </Typography>
+                <Button onClick={typingAnimation}>Click Me!</Button>
               </CardContent>
             </Card>
             <Card>
