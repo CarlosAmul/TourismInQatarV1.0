@@ -132,10 +132,10 @@ export default function HomePage({ index }) {
     <Page title="Home Page">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <TextField lable="Search" value={search} onChange={val=>setSearch(val.target.value)}/>
-        <Button onClick={() => setViewMap(!viewMap)}>View Map</Button>
         <Button id="searchNow"onClick={handleSearch}>search</Button>
         <Button id="changeColor" onClick={changeCardColor}>change color</Button>
         <Button id="shuffle" onClick={shuffle}>shuffle cards</Button>
+        <Button onClick={() => setViewMap(!viewMap)}>View Map</Button>
 
         <Grid container spacing={3}>
           <Grid key="map" item hidden={!viewMap} xs={12}>
@@ -170,11 +170,7 @@ export default function HomePage({ index }) {
                     variant="caption"
                     component="div"
                     sx={{
-<<<<<<< HEAD
-                      color: 'primary',
-=======
                       color: `${textColor[index%2]}`,
->>>>>>> 74a25ce98c4f559d33a5007d8174a8bacaf06412
                       fontSize: '18px',
                       ...((latestPostLarge || latestPostSmall) && {
                         opacity: 0.64,

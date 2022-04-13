@@ -1,11 +1,11 @@
 /* eslint react/style-prop-object: 0 */
 
 // map
-import Map, {
+import ReactMapboxGl, {
     Layer, Feature, Marker, Popup,
 } from 'react-mapbox-gl'
 import { useEffect, useCallback, useState, useMemo } from 'react';
-import { render } from 'react-dom';
+import {render} from 'react-dom';
 import { BsPinFill } from "react-icons/bs";
 import 'mapbox-gl/dist/mapbox-gl.css';
 import places from './places.json'
@@ -26,14 +26,13 @@ export default function QMap() {
                 </Marker>
             )), [])
 
-    // const Map = ReactMapboxGl({
-    //     accessToken:
-    //         'pk.eyJ1IjoiY2FybG9zYW11bCIsImEiOiJjbDFuYTc2NDMwYWRlM29wZzRqbTVqaDVrIn0.7-I9jUfnZ2TagYEF491H8g'
-    // });
+    const Map = ReactMapboxGl({
+        accessToken:
+            'pk.eyJ1IjoiY2FybG9zYW11bCIsImEiOiJjbDFuYTc2NDMwYWRlM29wZzRqbTVqaDVrIn0.7-I9jUfnZ2TagYEF491H8g'
+    });
     return (<Map
-        mapStyle="mapbox://styles/mapbox/streets-v9"
-        mapboxAccessToken="pk.eyJ1IjoiY2FybG9zYW11bCIsImEiOiJjbDFuYTc2NDMwYWRlM29wZzRqbTVqaDVrIn0.7-I9jUfnZ2TagYEF491H8g"
-        style={{
+        style="mapbox://styles/mapbox/streets-v9"
+        containerStyle={{
             height: '50vh',
             width: '60vw'
         }}
@@ -48,7 +47,7 @@ export default function QMap() {
                 anchor="top"
                 coordinates={popupInfo.coordinates}
                 onClick={() => setPopupInfo(null)}
-            // onClose={() => setPopupInfo(null)}
+                // onClose={() => setPopupInfo(null)}
             >
                 <div>
                     {popupInfo.name}
