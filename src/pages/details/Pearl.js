@@ -71,7 +71,7 @@ export default function PearlDetails() {
       i += 1
       setTimeout(typingAnimation, 50);
     }
-    else if (i === place.placeName.length){
+    else if (i === place.placeName.length) {
       console.log("Animation 2")
       typingAnimation2()
     }
@@ -87,13 +87,29 @@ export default function PearlDetails() {
     for (let d = 0; d < place.placeName.length; d += 1) {
       element.innerHTML += `<Text id="text${d}">${place.placeName.charAt(d)}</Text>`
     }
-    setInterval(() =>{
-    for (let d = 0; d < place.placeName.length; d += 1) {
-      const letter = document.getElementById(`text${d}`)
-      delay(10000).then(letter.style.color = `#${Math.floor(Math.random()*16777215).toString(16)}`);
-    }
-  }, 100)
+    setInterval(() => {
+      for (let d = 0; d < place.placeName.length; d += 1) {
+        const letter = document.getElementById(`text${d}`)
+        delay(10000).then(letter.style.color = `#${Math.floor(Math.random() * 16777215).toString(16)}`);
+      }
+    }, 100)
   }
+
+  const shakeElement = (event) => {
+    const offSetTop = event.srcElement.offsetTop
+    const offSetLeft = event.srcElement.offsetLeft
+    console.log(event.srcElement.style.height)
+    setInterval(() => {
+      if (event.srcElement.style.width === "150px") {
+        event.srcElement.style.width = "100px"
+      }
+      else {
+        event.srcElement.style.width = "150px"
+      }
+    }, 500)
+  }
+
+  window.addEventListener('click', shakeElement)
 
   return (
     <Page title={place.placeName}>
@@ -107,22 +123,22 @@ export default function PearlDetails() {
         />
         {place &&
           <>
-            <Card>
+            <Card id="card">
               <CardContent>
                 <Typography id="placeName" sx={{ fontSize: 30 }} color="text.primary" gutterBottom>
-                  {}
+                  { }
                 </Typography>
                 <Button onClick={typingAnimation}>Click Me!</Button>
               </CardContent>
             </Card>
             <Card>
-              <Grid container>
+              <Grid id="grid" container>
                 <Grid item xs={12} md={6} lg={5}>
                   <PlaceDetailsCarousel place={place} />
                 </Grid>
                 <Grid item xs={12} md={6} lg={7}>
-                  <Card>
-                    <TabContext value={value}>
+                  <Card id="card2">
+                    <TabContext id="tab" value={value}>
                       <Box sx={{ px: 3, bgcolor: 'background.neutral' }}>
                         <TabList onChange={(e, value) => setValue(value)}>
                           <Tab disableRipple value="1" label="Description" />
