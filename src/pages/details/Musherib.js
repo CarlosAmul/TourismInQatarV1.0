@@ -1,3 +1,5 @@
+/* eslint no-else-return:0 */
+
 import { sentenceCase } from 'change-case';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -5,8 +7,6 @@ import { useEffect, useState } from 'react';
 import { alpha, styled } from '@mui/material/styles';
 import { Box, Tab, Card, CardContent, Grid, Divider, Container, Typography } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-// Chart
-import Chart from "react-apexcharts";
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
 import { getProduct, addCart, onGotoStep } from '../../redux/slices/product';
@@ -22,6 +22,9 @@ import { SkeletonProduct } from '../../components/skeleton';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 // sections
 import PlaceDetailsCarousel from '../../sections/details/placeCarousel';
+
+// chart
+import MChart from './charts/MusheribChart'
 
 // ----------------------------------------------------------------------
 
@@ -62,19 +65,8 @@ export default function PearlDetails() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
   const [value, setValue] = useState('1');
-  const [chartTab, setChartTab] = useState('1')
   const { name = '' } = useParams();
-
   const place = { id: 2, placeName: "Musherib", desc: "It is the world’s first sustainable downtown regeneration project and one of the smartest cities on earth, strategically located in the heart of Doha – the ambitious and thriving capital city of Qatar – only minutes away from the Hamad International Airport. Msheireb Downtown Doha, inspires a modern and digital community, featuring smart living and working environments, and is nothing short of a wonderful place to work, shop, enjoy and live.", img: ['https://www.myholidays.com/blog/content/images/2021/04/Why-Visit-Msheireb-Downtown-Doha.jpg', 'https://www.iloveqatar.net/public/images/news/_760x500_clip_center-center_none/msheireb-tram-msheireb-downtown-doha.jpg', 'https://www.iloveqatar.net/public/images/news/_760x500_clip_center-center_none/musherib.jpg', 'https://www.myholidays.com/blog/content/images/2020/11/Msheireb-Downtown-Doha.jpg'] }
-
-  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-  // const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-  const times = [
-    '12am', '1am', '2am', '3am', '4am', '5am',
-    '6am', '7am', '8am', '9am', '10am', '11am',
-    '12pm', '1pm', '2pm', '3pm', '4pm', '5pm',
-    '6pm', '7pm', '8pm', '9pm', '10pm', '11pm '
-  ]
 
   return (
     <Page title={place.placeName}>
@@ -111,7 +103,7 @@ export default function PearlDetails() {
                       </Box>
 
                       <Divider />
-
+              
                       <TabPanel value="1">
                         <Box sx={{ p: 3 }}>
                           <Markdown children={place.desc} />
@@ -119,62 +111,7 @@ export default function PearlDetails() {
                       </TabPanel>
                       <TabPanel value="2">
                         <Box sx={{ p: 3 }}>
-                          <TabContext value={chartTab}>
-                            <Markdown children={`${place.placeName} - Estimate of maximum vistors per day`} />
-                            <Chart
-                              options={{
-                                chart: {
-                                  id: "weeklyvisitors"
-                                },
-                                xaxis: {
-                                  categories: days
-                                }
-                              }}
-
-                              series={[
-                                {
-                                  name: "visitors",
-                                  data: [200, 100, 300, 800, 500, 400]
-                                }
-                              ]}
-                              type="bar"
-                              width="500"
-                            />
-
-                            <TabList onChange={(e, value) => setChartTab(value)}>
-                              <Tab disableRipple value="1" label="Monday" />
-                              <Tab disableRipple value="2" label="Tuesday" />
-                              <Tab disableRipple value="2" label="Wednesday" />
-                              <Tab disableRipple value="2" label="Thursday" />
-                              <Tab disableRipple value="2" label="Friday" />
-                              <Tab disableRipple value="2" label="Saturday" />
-                            </TabList>
-                            <Divider />
-                            <TabPanel value="1">
-                              hello
-                            </TabPanel>
-                            <TabPanel value="2">
-                              <Chart
-                                options={{
-                                  chart: {
-                                    id: "weeklyvisitors"
-                                  },
-                                  xaxis: {
-                                    categories: times
-                                  }
-                                }}
-
-                                series={[
-                                  {
-                                    name: "visitors",
-                                    data: [200, 100, 300, 800, 500, 400]
-                                  }
-                                ]}
-                                type="line"
-                                width="500"
-                              />
-                            </TabPanel>
-                          </TabContext>
+                          <MChart place={place}/>
                         </Box>
                       </TabPanel>
                     </TabContext>

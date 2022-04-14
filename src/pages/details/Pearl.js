@@ -20,6 +20,8 @@ import { SkeletonProduct } from '../../components/skeleton';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 // sections
 import PlaceDetailsCarousel from '../../sections/details/placeCarousel';
+// charts
+import PChart from './charts/PearlChart'
 
 // ----------------------------------------------------------------------
 
@@ -155,7 +157,7 @@ export default function PearlDetails() {
                       </TabPanel>
                       <TabPanel value="2">
                         <Box sx={{ p: 3 }}>
-                          <Markdown children={place.placeName} />
+                          <PChart place={place}/>
                         </Box>
                       </TabPanel>
                     </TabContext>

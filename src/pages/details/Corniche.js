@@ -21,6 +21,9 @@ import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 // sections
 import PlaceDetailsCarousel from '../../sections/details/placeCarousel';
 
+// charts
+import CChart from './charts/CornicheChart'
+
 // ----------------------------------------------------------------------
 
 const PRODUCT_DESCRIPTION = [
@@ -107,7 +110,7 @@ export default function PearlDetails() {
                       </TabPanel>
                       <TabPanel value="2">
                         <Box sx={{ p: 3 }}>
-                          <Markdown children={place.placeName} />
+                          <CChart place={place} />
                         </Box>
                       </TabPanel>
                     </TabContext>
