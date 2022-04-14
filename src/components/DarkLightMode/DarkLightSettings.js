@@ -1,5 +1,5 @@
-// import React, { useState, useEffect } from 'react';
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
+// import * as React from 'react';
 import useSettings from '../../hooks/useSettings';
 
 export default function DarkLightSetting() {
