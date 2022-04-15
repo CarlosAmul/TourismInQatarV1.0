@@ -1,11 +1,17 @@
 import { Suspense, lazy } from 'react';
 import { Navigate, useRoutes, useLocation } from 'react-router-dom';
 // layouts
+import MainLayout from '../layouts/main';
 import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
+// guards
+import GuestGuard from '../guards/GuestGuard';
+import AuthGuard from '../guards/AuthGuard';
+// import RoleBasedGuard from '../guards/RoleBasedGuard';
+// config
+import { PATH_AFTER_LOGIN } from '../config';
 // components
 import LoadingScreen from '../components/LoadingScreen';
-// import Calendar from 'src/pages/Calendar';
 
 // ----------------------------------------------------------------------
 
@@ -46,11 +52,11 @@ export default function Router() {
       ],
     },
     {
-      path: '*',
+      path: '',
       element: <LogoOnlyLayout />,
       children: [
         { path: '404', element: <NotFound /> },
-        { path: '*', element: <Navigate to="/404" replace /> },
+        { path: '', element: <Navigate to="/404" replace /> },
       ],
     },
     {
@@ -58,9 +64,6 @@ export default function Router() {
       element: <MainLayout />,
       children: [
         { element: <HomePage />, index: true },
-        { path: 'about-us', element: <About /> },
-        { path: 'contact-us', element: <Contact /> },
-        { path: 'faqs', element: <Faqs /> },
         { path: 'details/pearl', element: <PearlPage /> },
         { path: 'details/souq', element: <SouqPage /> },
         { path: 'details/musherib', element: <MusheribPage /> },
@@ -75,7 +78,6 @@ export default function Router() {
 }
 
 
-// Dashboard
 const HomePage = Loadable(lazy(() => import('../pages/HomePage')));
 const Calendar = Loadable(lazy(() => import('../pages/Calendar')));
 const PageThree = Loadable(lazy(() => import('../pages/Feedback')));
