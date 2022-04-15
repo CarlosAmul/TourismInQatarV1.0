@@ -37,7 +37,7 @@ import db from '../db'
 import { handleSubmitEvent } from './CalendarFunctions';
 // redux
 // import { useDispatch, useSelector } from '../redux/store';
-import { getEvents, openModal, closeModal, updateEvent, selectEvent, selectRange } from '../redux/slices/calendar';
+// import { getEvents, openModal, closeModal, updateEvent, selectEvent, selectRange } from '../redux/slices/calendar';
 // routes
 // import { PATH_DASHBOARD } from '../routes/paths';
 // hooks
