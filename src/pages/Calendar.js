@@ -33,6 +33,7 @@ import DateTimePicker from '@mui/lab/DateTimePicker';
 import DatePicker from '@mui/lab/DatePicker';
 import MobileDatePicker from '@mui/lab/MobileDatePicker';
 import db from '../db'
+
 import { handleSubmitEvent } from './CalendarFunctions';
 // redux
 // import { useDispatch, useSelector } from '../redux/store';
@@ -158,6 +159,7 @@ export default function Calendar() {
   };
 
   const handleSubmit = () => {
+
     handleSubmitEvent( {theTitle,eventdate:EventDate})
 
       handleCancel()
@@ -166,7 +168,7 @@ export default function Calendar() {
   const handleCloseModal = () => {
     setIsOpenModal(false);
   };
-  
+
 const handleCancel=()=>{
   setTheTitle("")
   setEventDate(new Date)

@@ -22,6 +22,7 @@ import useSettings from '../hooks/useSettings';
 // components
 import Page from '../components/Page';
 import db from '../db'
+
 import { handleSubmitFeed, handleUpdateFeed , handleDelete} from './FeedbacksFunctions';
 // ----------------------------------------------------------------------
 
@@ -36,6 +37,7 @@ export default function Feedback() {
   useEffect(() => db.Feedbacks.listenToFeedbacks(setFeedbacks), [])
 
   const handleSubmit=()=>{
+
     handleSubmitFeed({name, comment})
     handleCancel()
   }
@@ -43,6 +45,7 @@ export default function Feedback() {
     setId("")
     setName("")
     setComment("")
+
     setEdit(false)
  }
  const handleEdit=(item)=>{
@@ -52,6 +55,7 @@ export default function Feedback() {
 
  }
  const handleUpdate=()=>{
+
  handleUpdateFeed({id, name, comment})
   handleCancel()
 
@@ -69,6 +73,7 @@ handleDelete(id)
         <FormControl>
           <Stack spacing={4} direction="row">
             <TextField label="Name" type="text" value={name} 
+
             onChange={(e) => setName(e.target.value)} id="name" />
             <TextField label="Feedback" type="text" value={comment} 
             onChange={(e) => setComment(e.target.value)} id="comment" />
@@ -78,6 +83,7 @@ handleDelete(id)
               <Button variant="outlined" color="inherit" onClick={handleCancel}>
                 Cancel
               </Button>
+
 {!edit?<Button type="submit" variant="contained" onClick={handleSubmit} id="add">
                 Add
               </Button>:<Button type="submit" variant="contained" onClick={handleUpdate}>
@@ -107,6 +113,7 @@ handleDelete(id)
           <Typography>
             {comment.comment}
           </Typography>
+
           <Button variant="outlined" color="inherit"  onClick={()=>handleDeleteLocally(comment.id)}>
                 Delete
               </Button>

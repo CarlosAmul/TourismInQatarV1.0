@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+
 import { collection, onSnapshot, query, doc, addDoc , updateDoc, deleteDoc, getDocs, where} from 'firebase/firestore';
-import { comment } from 'stylis';
 import 'regenerator-runtime/runtime'
 
 const firebaseConfig1 = {
@@ -33,6 +33,7 @@ class Feedbacks {
       set(feedbacks);
     });
   };
+
   getFeedbacks=async()=>{
     const q = query(collection(db, "feedbacks"))
     let allFeeds=[]
@@ -95,6 +96,7 @@ class Events {
     }
     deleteEvent=async(id)=>
     await deleteDoc(doc(db, "events", id));
+
     getAllEvents=async()=>{
       const q = query(collection(db, "events"))
       let allEvents=[]

@@ -1,6 +1,4 @@
 
-// token: sk.eyJ1IjoiY2FybG9zYW11bCIsImEiOiJjbDFuYWJtZmQwN2U4M2xzMHZ6bWJ6NXVxIn0.Dir6AiSvYeuJjslEyCXcfQ
-
 // import orderBy from 'lodash/orderBy';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
@@ -16,6 +14,7 @@ import Image from '../components/Image';
 import SvgIconStyle from '../components/SvgIconStyle';
 // utills
 import { fDate } from '../utils/formatTime';
+
 // map 
 import QMap from './Map'
 
@@ -40,6 +39,7 @@ export default function HomePage({ index }) {
   const latestPostLarge = index === 0;
   const latestPostSmall = index === 1 || index === 2;
   const linkTo = '/';
+
 
 
   const [viewMap, setViewMap] = useState(true)
@@ -107,6 +107,7 @@ export default function HomePage({ index }) {
               <Card
                 id={`card${place.id}`}
                 sx={{
+
                   backgroundColor: `${backgroundColor[index % 2]}`,
                 }}
               >
@@ -131,6 +132,7 @@ export default function HomePage({ index }) {
                     variant="caption"
                     component="div"
                     sx={{
+
                       color: `${textColor[index % 2]}`,
                       fontSize: '18px',
                       ...((latestPostLarge || latestPostSmall) && {
@@ -141,6 +143,7 @@ export default function HomePage({ index }) {
                   >
                     {place.placeName}
                   </Typography>
+
                   <Button sx={{
                     color: `${textColor[index % 2]}`,
                     ...((latestPostLarge || latestPostSmall) && {
