@@ -56,6 +56,7 @@ const selectedEventSelector = (state) => {
   return null;
 };
 
+
 export default function Calendar() {
   const { themeStretch } = useSettings();
 
@@ -217,6 +218,7 @@ const handleCancel=()=>{
               headerToolbar={false}
               allDayMaintainDuration
               eventResizableFromStart
+
               height={isDesktop ? 720 : 'auto'}
               plugins={[listPlugin, dayGridPlugin, timelinePlugin, timeGridPlugin, interactionPlugin]}
             />
