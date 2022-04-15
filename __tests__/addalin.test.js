@@ -33,3 +33,5 @@ describe("Dark Mode Testing", () => {
         expect(event.target.value).toBe('light')
     })
 })
+
+describe("Animation Testing",() => {})
