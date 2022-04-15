@@ -13,6 +13,7 @@ import Image from '../components/Image';
 import SvgIconStyle from '../components/SvgIconStyle';
 // utills
 import { fDate } from '../utils/formatTime';
+import {changeCardColor, shuffle, createPlaces, handleSearch} from './homePageFunctions'
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +21,7 @@ HomePage.propTypes = {
   index: PropTypes.number,
 };
 export default function HomePage({ index }) {
-  const { themeStretch } = useSettings();
+  // const { themeStretch } = useSettings();
 
   const [places, setPlaces] = useState([]);
   const [search, setSearch] = useState("");
@@ -32,98 +33,48 @@ export default function HomePage({ index }) {
   const linkTo = '/';
 
   useEffect(() => {
-    createPlaces();
+    createPlacesLocally();
 
   }, []);
-
-  const createPlaces = () => {
-    const places = [
-      {
-        id: 0,
-        placeName: 'The Pearl',
-        img: 'https://thepearlqatar.com/-/media/Thepearlqatar/ExploreTheIsland2019/QQ-2.jpg',
-      },
-      {
-        id: 1,
-        placeName: 'Souq Waqif',
-        img: 'http://cdn.cnn.com/cnnnext/dam/assets/180122165928-souq-waqif--by-dimitris-sideridis.jpg',
-      },
-      {
-        id: 2,
-        placeName: 'Musherib',
-        img: 'https://www.myholidays.com/blog/content/images/2021/04/Why-Visit-Msheireb-Downtown-Doha.jpg',
-      },
-      {
-        id: 3,
-        placeName: 'Lusail',
-        img: 'https://www.timeoutdoha.com/cloud/timeoutdoha/2021/08/17/Lusail-in-Qatar1.jpg',
-      },
-      {
-        id: 4,
-        placeName: 'Katara',
-        img: 'https://www.accessibleqatar.com/wp-content/uploads/2016/05/katara_photo_big_2.jpg',
-      },
-      {
-        id: 5,
-        placeName: 'Cournish',
-        img: 'https://lp-cms-production.imgix.net/2019-06/f868443201b1370e5faa91e332e47ef8-al-corniche.jpg',
-      },
-    ];
-    setPlaces(places);
-    // changeCardColor()
+  const addition=()=>{
+    return  true
+  }
+  const createPlacesLocally = () => {
+  
+    setPlaces(createPlaces());
 
   };
 
-  const changeCardColor = () => {
-    for(let i=0; i<6; i+=1){
+  const changeCardColorLocally = () => {
+    const cardColors =  changeCardColor(backgroundColor[0])
+    setBackgroundColor([cardColors[0], cardColors[1]])
+    setTextColor([cardColors[1], cardColors[0]])
 
-      if(backgroundColor[0]==="#EBD168"){
-        setBackgroundColor(["#A81818",'#EBD168'])
-        setTextColor(["#EBD168","#A81818"])
-      }
-      else{
-        setBackgroundColor(["#EBD168","#A81818"])
-        setTextColor(["#A81818",'#EBD168'])
-      
-      }}
-      // setInterval(clickButton, 10000)
   };
   const clickButton=()=>{
     document.getElementById("changeColor").click()
   }
-  const shuffle=()=> {
-    const places1= places
-    const newArrengement=[]
-    let currentIndex = places.length
-    let randomIndex;
+  const shuffleLocally=()=> {
 
-
-    while (currentIndex !== 0) {
-  
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      newArrengement.push(places1[randomIndex])
-      places1.splice(randomIndex, 1)
-      currentIndex-=1
-    }
-    setPlaces(newArrengement)
+    setPlaces(shuffle())
   }
-  const handleSearch=()=>{
+  const handleSearchLocally=()=>{
     if(search.length>0){
+
     
-    const searchPlaces=places.filter(place=>place.placeName.toLowerCase().includes(search.toLowerCase()))
-    
-    setPlaces(searchPlaces)
+    setPlaces(handleSearch(search))
     }
   else{
     createPlaces()
   }  }
   return (
     <Page title="Home Page">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      {/* <Container maxWidth={themeStretch ? false : 'lg'}> */}
+      <Container maxWidth='lg'> 
         <TextField lable="Search" value={search} onChange={val=>setSearch(val.target.value)}/>
-        <Button id="searchNow"onClick={handleSearch}>search</Button>
-        <Button id="changeColor" onClick={changeCardColor}>change color</Button>
-        <Button id="shuffle" onClick={shuffle}>shuffle cards</Button>
+        <Button id="searchNow"onClick={handleSearchLocally}>search</Button>
+        <Button id="changeColor" onClick={changeCardColorLocally}>change color</Button>
+        <Button id="shuffle" onClick={shuffleLocally}>shuffle cards</Button>
 
         <Grid container spacing={3}>
           {places.map((place, index) => (
