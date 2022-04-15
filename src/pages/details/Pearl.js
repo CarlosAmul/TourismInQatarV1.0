@@ -22,6 +22,7 @@ import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import PlaceDetailsCarousel from '../../sections/details/placeCarousel';
 // functions
 import { typingAnimation, shakeElement } from './detailsFunctions'
+import 'regenerator-runtime/runtime'
 
 // ----------------------------------------------------------------------
 
@@ -84,7 +85,7 @@ export default function PearlDetails() {
                 <Typography id="placeName" sx={{ fontSize: 30 }} color="text.primary" gutterBottom>
                   { }
                 </Typography>
-                <Button onClick={() => typingAnimation("placeName",place)}>Click Me!</Button>
+                <Button id="clickMe" onClick={() => typingAnimation("placeName",place)}>Click Me!</Button>
               </CardContent>
             </Card>
             <Card>

@@ -1,3 +1,5 @@
+import 'regenerator-runtime/runtime'
+
 let i = 0
 
 const typingAnimation = (id, place) => {

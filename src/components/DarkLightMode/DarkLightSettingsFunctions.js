@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import * as React from 'react';
+import 'regenerator-runtime/runtime'
 import useSettings from '../../hooks/useSettings';
 
 let time = 0
