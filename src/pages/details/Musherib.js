@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 // @mui
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Tab, Card, CardContent, Grid, Divider, Container, Typography } from '@mui/material';
+import { Box, Tab, Card, CardContent, Grid, Divider, Container, Typography, Button } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
@@ -20,6 +20,8 @@ import { SkeletonProduct } from '../../components/skeleton';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 // sections
 import PlaceDetailsCarousel from '../../sections/details/placeCarousel';
+// functions
+import { typingAnimation, shakeElement } from './detailsFunctions'
 
 // ----------------------------------------------------------------------
 
@@ -61,8 +63,9 @@ export default function PearlDetails() {
   const dispatch = useDispatch();
   const [value, setValue] = useState('1');
   const { name = '' } = useParams();
-
   const place = { id: 2, placeName: "Musherib", desc: "It is the world’s first sustainable downtown regeneration project and one of the smartest cities on earth, strategically located in the heart of Doha – the ambitious and thriving capital city of Qatar – only minutes away from the Hamad International Airport. Msheireb Downtown Doha, inspires a modern and digital community, featuring smart living and working environments, and is nothing short of a wonderful place to work, shop, enjoy and live.", img: ['https://www.myholidays.com/blog/content/images/2021/04/Why-Visit-Msheireb-Downtown-Doha.jpg', 'https://www.iloveqatar.net/public/images/news/_760x500_clip_center-center_none/msheireb-tram-msheireb-downtown-doha.jpg', 'https://www.iloveqatar.net/public/images/news/_760x500_clip_center-center_none/musherib.jpg', 'https://www.myholidays.com/blog/content/images/2020/11/Msheireb-Downtown-Doha.jpg'] }
+
+  window.addEventListener('click', shakeElement)
 
   return (
     <Page title={place.placeName}>
@@ -76,21 +79,22 @@ export default function PearlDetails() {
         />
         {place &&
           <>
-            <Card>
+            <Card id="card">
               <CardContent>
-                <Typography sx={{ fontSize: 30 }} color="text.primary" gutterBottom>
-                {place.placeName}
+                <Typography id="placeName" sx={{ fontSize: 30 }} color="text.primary" gutterBottom>
+                  { }
                 </Typography>
+                <Button onClick={() => typingAnimation("placeName", place)}>Click Me!</Button>
               </CardContent>
             </Card>
             <Card>
-              <Grid container>
+              <Grid id="grid" container>
                 <Grid item xs={12} md={6} lg={5}>
                   <PlaceDetailsCarousel place={place} />
                 </Grid>
                 <Grid item xs={12} md={6} lg={7}>
-                  <Card>
-                    <TabContext value={value}>
+                  <Card id="card2">
+                    <TabContext id="tab" value={value}>
                       <Box sx={{ px: 3, bgcolor: 'background.neutral' }}>
                         <TabList onChange={(e, value) => setValue(value)}>
                           <Tab disableRipple value="1" label="Description" />

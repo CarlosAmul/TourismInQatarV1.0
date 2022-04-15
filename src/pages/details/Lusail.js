@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 // @mui
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Tab, Card, CardContent, Grid, Divider, Container, Typography } from '@mui/material';
+import { Box, Tab, Card, CardContent, Grid, Divider, Container, Typography, Button } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
@@ -20,6 +20,8 @@ import { SkeletonProduct } from '../../components/skeleton';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 // sections
 import PlaceDetailsCarousel from '../../sections/details/placeCarousel';
+// functions
+import { typingAnimation, shakeElement } from './detailsFunctions'
 
 // ----------------------------------------------------------------------
 
@@ -61,8 +63,9 @@ export default function PearlDetails() {
   const dispatch = useDispatch();
   const [value, setValue] = useState('1');
   const { name = '' } = useParams();
-
   const place = { id: 3, placeName: "Lusail", desc: "Lusail is a planned city in Qatar, located on the coast, in the southern part of the municipality of Al Daayen. Lusail is located about 23 kilometres (14 mi) north of the city centre of Doha, just north of the West Bay Lagoon, on over 38 square kilometres (15 sq mi) and will eventually have the infrastructure to accommodate 450,000 people. Of these 450,000 people, it is estimated that 250,000 or fewer will be residents, 190,000 will be office workers and 60,000 will be retail workers.It is planned to have marinas, residential areas, island resorts, commercial districts, luxury shopping and leisure facilities, and a golf course community, man made islands and several entertainment districts. Construction is still ongoing. Development is being carried out by the state-controlled developer Qatari Diar along with Parsons Corporation and Dorsch-Gruppe.It is one of the proposed venues for the Qatar 2022 World Cup is the Lusail Iconic Stadium. It is also the site of the Formula One race track and the First Doha Grand Prix was held here in 2021. ", img: ['https://www.timeoutdoha.com/cloud/timeoutdoha/2022/02/17/Lusail-Marina-Promenade.jpg', 'https://www.hospitalitynet.org/picture/xxl_153123921.jpg?t=1613469924', 'https://www.visitqatar.qa/content/dam/things-to-do/popular-attractions-/lusail/_DSC0903.jpg/_jcr_content/renditions/medium-1280px.jpeg', 'https://www.timeoutdoha.com/cloud/timeoutdoha/2021/08/17/Lusail-in-Qatar1.jpg'] }
+  
+  window.addEventListener('click', shakeElement)
 
   return (
     <Page title={place.placeName}>
@@ -76,21 +79,22 @@ export default function PearlDetails() {
         />
         {place &&
           <>
-            <Card>
+            <Card id="card">
               <CardContent>
-                <Typography sx={{ fontSize: 30 }} color="text.primary" gutterBottom>
-                {place.placeName}
+                <Typography id="placeName" sx={{ fontSize: 30 }} color="text.primary" gutterBottom>
+                  { }
                 </Typography>
+                <Button onClick={() => typingAnimation("placeName", place)}>Click Me!</Button>
               </CardContent>
             </Card>
             <Card>
-              <Grid container>
+              <Grid id="grid" container>
                 <Grid item xs={12} md={6} lg={5}>
                   <PlaceDetailsCarousel place={place} />
                 </Grid>
                 <Grid item xs={12} md={6} lg={7}>
-                  <Card>
-                    <TabContext value={value}>
+                  <Card id="card2">
+                    <TabContext id="tab" value={value}>
                       <Box sx={{ px: 3, bgcolor: 'background.neutral' }}>
                         <TabList onChange={(e, value) => setValue(value)}>
                           <Tab disableRipple value="1" label="Description" />

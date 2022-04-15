@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 // @mui
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Tab, Card, CardContent, Grid, Divider, Container, Typography } from '@mui/material';
+import { Box, Tab, Card, CardContent, Grid, Divider, Container, Typography, Button } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
@@ -20,6 +20,8 @@ import { SkeletonProduct } from '../../components/skeleton';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 // sections
 import PlaceDetailsCarousel from '../../sections/details/placeCarousel';
+// functions
+import { typingAnimation, shakeElement } from './detailsFunctions'
 
 // ----------------------------------------------------------------------
 
@@ -61,9 +63,10 @@ export default function PearlDetails() {
   const dispatch = useDispatch();
   const [value, setValue] = useState('1');
   const { name = '' } = useParams();
-
   const place = { id: 5, placeName: "Corniche", desc: "One of Doha’s most iconic attractions, the Doha Corniche is a seven kilometer stretch of gorgeous promenade overlooking the serene waterfront. With a crescent shaped walkway around the Doha Bay, the Corniche offers the best views of the city’s modern skyline, making the epicenter of various occasions such as the National Day celebrations and the National Sports Day. Watch the dhows lighting up the Corniche in the evenings while on your walk around the bay or simply take a boat ride to soak in the vista of this city. ", img: ['https://i.pinimg.com/originals/3d/3f/df/3d3fdf718ea6586ab41bae58be870735.jpg', 'https://www.telegraph.co.uk/content/dam/travel/Spark/Qatar/corniche-skyline-xlarge.jpg', 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Corniche_Doha_Qatar.jpg/640px-Corniche_Doha_Qatar.jpg', 'https://i.pinimg.com/736x/d7/93/6d/d7936da66467dfe62706921fd5a81eb5.jpg'] }
 
+  window.addEventListener('click', shakeElement)
+  
   return (
     <Page title={place.placeName}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
@@ -76,21 +79,22 @@ export default function PearlDetails() {
         />
         {place &&
           <>
-            <Card>
+            <Card id="card">
               <CardContent>
-                <Typography sx={{ fontSize: 30 }} color="text.primary" gutterBottom>
-                {place.placeName}
+                <Typography id="placeName" sx={{ fontSize: 30 }} color="text.primary" gutterBottom>
+                  { }
                 </Typography>
+                <Button onClick={() => typingAnimation("placeName", place)}>Click Me!</Button>
               </CardContent>
             </Card>
             <Card>
-              <Grid container>
+              <Grid id="grid" container>
                 <Grid item xs={12} md={6} lg={5}>
                   <PlaceDetailsCarousel place={place} />
                 </Grid>
                 <Grid item xs={12} md={6} lg={7}>
-                  <Card>
-                    <TabContext value={value}>
+                  <Card id="card2">
+                    <TabContext id="tab" value={value}>
                       <Box sx={{ px: 3, bgcolor: 'background.neutral' }}>
                         <TabList onChange={(e, value) => setValue(value)}>
                           <Tab disableRipple value="1" label="Description" />
