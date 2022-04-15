@@ -4,10 +4,9 @@ const typingAnimation = (id, place) => {
     if (i < place.placeName.length) {
         document.getElementById(id).innerHTML += place.placeName.charAt(i);
         i += 1
-        setTimeout(typingAnimation(id, place), 50);
+        setTimeout(() => typingAnimation(id, place), 50);
     }
     else if (i === place.placeName.length) {
-        console.log("Animation 2")
         typingAnimation2(id, place)
     }
 }

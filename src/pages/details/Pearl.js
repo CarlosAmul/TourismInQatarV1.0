@@ -84,7 +84,7 @@ export default function PearlDetails() {
                 <Typography id="placeName" sx={{ fontSize: 30 }} color="text.primary" gutterBottom>
                   { }
                 </Typography>
-                <Button onClick={() => typingAnimation("placeName",place.placeName)}>Click Me!</Button>
+                <Button onClick={() => typingAnimation("placeName",place)}>Click Me!</Button>
               </CardContent>
             </Card>
             <Card>
