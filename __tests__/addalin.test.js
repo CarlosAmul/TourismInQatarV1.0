@@ -1,4 +1,10 @@
 import { getTime, getCurrentTime, changeTheme, setCurrentTime } from '../src/components/DarkLightMode/DarkLightSettingsFunctions'
+const puppeteer = require('puppeteer')
+const address = "http://localhost:3000/"
+const headless = require('../browser.config')
+let browser, page = null
+
+jest.setTimeout(30000)
 
 describe("Dark Mode Testing", () => {
     test("expect type of hour to be number", () => {
@@ -34,4 +40,23 @@ describe("Dark Mode Testing", () => {
     })
 })
 
-describe("Animation Testing",() => {})
+describe("Animation Testing", () => {
+    test("expect place name to be displayed", async () => {
+        await page.goto(address + "/details/Pearl")
+        await page.waitForTimeout(1000)
+        const button = await page.$('#clickMe')
+        button.click()
+        const result = await page.evaluate(() => document.getElementById("placeName"))    
+        expect(result.innerText).toBe('The Pearl')
+    })
+
+    test("expect element to shake on click", async () => {
+        await page.goto(address + "/details/Pearl")
+        await page.waitForTimeout(1000)
+        const element = await page.$('#card')
+        element.click()
+        const elementResult = await page.evaluate(() => document.getElementById("card"))    
+        const result = elementResult.style.width === '100px' || elementResult.style.width === '150px'
+        expect(result).toBe(true)
+    })
+})

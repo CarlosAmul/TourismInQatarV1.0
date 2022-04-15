@@ -39,6 +39,8 @@
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.20.0",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/runtime": "^7.17.9",
     "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",

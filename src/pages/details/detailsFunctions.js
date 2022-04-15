@@ -40,12 +40,4 @@ const shakeElement = (event) => {
     }, 500)
 }
 
-const getI = () => {
-    return i
-}
-
-const setI = (value) => {
-    i = value
-}
-
-export { typingAnimation, typingAnimation2, shakeElement, getI, setI }
+export { typingAnimation, typingAnimation2, shakeElement }
