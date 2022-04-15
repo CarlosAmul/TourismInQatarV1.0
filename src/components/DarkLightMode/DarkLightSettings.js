@@ -1,28 +1,18 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+// import * as React from 'react';
 import useSettings from '../../hooks/useSettings';
+import {getTime, getCurrentTime, changeTheme } from './DarkLightSettingsFunctions'
 
 export default function DarkLightSetting() {
     const { onChangeMode } = useSettings();
-    const [time, setTime] = useState(0)
+    const time = getCurrentTime()
 
     useEffect(() => {
-        changeTheme()
+        changingMode()
     }, [time]) // eslint-disable-line react-hooks/exhaustive-deps
 
-    const getTime = () => {
-        const d = new Date();
-        const hour = d.getHours();
-        setTime(hour)
-    }
-
-    const changeTheme = () => {
-        const event = { target: { value: '' } };
-        if (time < 18) {
-            event.target.value = 'light'
-        }
-        else {
-            event.target.value = 'dark'
-        }
+    const changingMode = () => {
+        const event = changeTheme()
         onChangeMode(event)
     }
 

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 // @mui
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Tab, Card, CardContent, Grid, Divider, Container, Typography } from '@mui/material';
+import { Box, Tab, Card, CardContent, Grid, Divider, Container, Typography, Button } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
@@ -22,6 +22,8 @@ import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import PlaceDetailsCarousel from '../../sections/details/placeCarousel';
 // Chart
 import SChart from './charts/SouqChart'
+// functions
+import { typingAnimation, shakeElement } from './detailsFunctions'
 
 // ----------------------------------------------------------------------
 
@@ -63,8 +65,9 @@ export default function PearlDetails() {
   const dispatch = useDispatch();
   const [value, setValue] = useState('1');
   const { name = '' } = useParams();
-
   const place = { id: 1, placeName: "Souq Waqif", desc: 'If you are looking for a wonderful place to shop, to dine, to explore or simply sitting at one of the many attractive outdoor cafe to watch the world pass by, look nowhere but Souq Waqif in Doha.For centuries,this location has been a souq for Bedouin (nomads who have historically inhabited the Arabian and Syrian Deserts.) to take the wool and animals to trade for daily necessities.  With time pass, the souq started to run down and has almost get to the point of being demolished.  Luckily, in 2004, it was decided to preserve this historical site so the entire market area has been renovated and restored according to the traditional Qatari architectural techniques.  It’s probably the only traditional souq left in the Gulf.', img: ['http://cdn.cnn.com/cnnnext/dam/assets/180122165928-souq-waqif--by-dimitris-sideridis.jpg', 'https://lp-cms-production.imgix.net/2019-06/5d98988e6f9bfc4ae173ae9762705e11-souq-waqif.jpg', 'https://www.visitqatar.qa/content/dam/visitqatar/img/13-things-to-do/C.jpg/_jcr_content/renditions/medium-1280px.jpeg', 'https://www.marhaba.qa/wp-content/uploads/2017/08/Souq-Waqif-Pigeons.jpg'] }
+
+  window.addEventListener('click', shakeElement)
 
   return (
     <Page title={place.placeName}>
@@ -78,21 +81,22 @@ export default function PearlDetails() {
         />
         {place &&
           <>
-            <Card>
+            <Card id="card">
               <CardContent>
-                <Typography sx={{ fontSize: 30 }} color="text.primary" gutterBottom>
-                  {place.placeName}
+                <Typography id="placeName" sx={{ fontSize: 30 }} color="text.primary" gutterBottom>
+                  { }
                 </Typography>
+                <Button onClick={() => typingAnimation("placeName", place)}>Click Me!</Button>
               </CardContent>
             </Card>
             <Card>
-              <Grid container>
+              <Grid id="grid" container>
                 <Grid item xs={12} md={6} lg={5}>
                   <PlaceDetailsCarousel place={place} />
                 </Grid>
                 <Grid item xs={12} md={6} lg={7}>
-                  <Card>
-                    <TabContext value={value}>
+                  <Card id="card2">
+                    <TabContext id="tab" value={value}>
                       <Box sx={{ px: 3, bgcolor: 'background.neutral' }}>
                         <TabList onChange={(e, value) => setValue(value)}>
                           <Tab disableRipple value="1" label="Description" />
