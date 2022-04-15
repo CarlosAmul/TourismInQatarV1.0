@@ -30,8 +30,6 @@ const typingAnimation2 = (id, place) => {
 }
 
 const shakeElement = (event) => {
-    const offSetTop = event.srcElement.offsetTop
-    const offSetLeft = event.srcElement.offsetLeft
     setInterval(() => {
         if (event.srcElement.style.width === "150px") {
             event.srcElement.style.width = "100px"
@@ -42,4 +40,12 @@ const shakeElement = (event) => {
     }, 500)
 }
 
-export { typingAnimation, typingAnimation2, shakeElement }
+const getI = () => {
+    return i
+}
+
+const setI = (value) => {
+    i = value
+}
+
+export { typingAnimation, typingAnimation2, shakeElement, getI, setI }
